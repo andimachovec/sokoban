@@ -29,7 +29,7 @@ int HeartBeat();
 
 int main(int, char**)
 {
-#ifndef WIN32 // <- This is not right, will be wrong on Linux, how to test for Mac?
+#ifdef __APPLE__ 
 	// If on Mac OS X, change into .app directory so we can find data files.
 	chdir("SYASokoban.app");
 	//chdir("FallingBlocks.app");
