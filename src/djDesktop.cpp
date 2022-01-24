@@ -7,6 +7,10 @@
 
 #include "djDesktop.h"
 #include "djSettings.h"
+#ifdef __HAIKU__
+#include "FindDirectory.h"
+#include "Path.h"
+#endif
 
 CdjDesktop *g_pScreen = NULL;
 
@@ -15,7 +19,16 @@ CdjDesktop *g_pScreen = NULL;
 
 std::string GetDataPath()
 {
-	return std::string("data/");
+	#ifdef __HAIKU__
+		BPath data_path;
+		find_directory(B_USER_NONPACKAGED_DATA_DIRECTORY, &data_path);
+		data_path.Append("SYASokoban");
+		std::string datapath_string(data_path.Path());
+		datapath_string+="/";
+		return datapath_string;
+	#else
+		return std::string("data/");
+	#endif
 }
 
 CdjDesktop::CdjDesktop()
