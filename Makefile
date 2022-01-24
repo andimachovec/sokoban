@@ -14,7 +14,11 @@ CFLAGS= -ansi -Wall -I/usr/local/include $(shell sdl-config --cflags)
 OBJFILES=src/djFont.o src/Games.o src/GameRegistry.o src/djUtils.o src/Sokoban.o src/Game.o src/djMenu.o src/Main.o src/djControls.o src/djItem.o src/djDesktop.o src/djGraph.o src/djSettings.o
 
 LIBS= -lstdc++ $(shell sdl-config --libs) -lm
-
+ifneq ($(OS),Windows_NT)
+	ifeq ($(shell uname),Haiku)
+		LIBS+=-lroot -lbe
+	endif
+endif
 
 default: syasokoban
 
