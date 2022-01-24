@@ -15,6 +15,10 @@
 #else
 #include <windows.h>//For WinMain() [dj2018-03]
 #endif
+#ifdef __HAIKU__
+#include "FindDirectory.h"
+#include "Path.h"
+#endif
 
 bool g_bMustRedraw = true;
 
@@ -67,6 +71,11 @@ int main(int, char**)
 		s = CONFIG_FILE;//Fallback 'old' behaviour - use 'current folder'
 	else
 		djAppendPathS(s, CONFIG_FILE);
+#elif __HAIKU__
+	BPath settings_path;
+	find_directory(B_USER_SETTINGS_DIRECTORY, &settings_path);
+	std::string s = settings_path.Path();
+	djAppendPathS(s, CONFIG_FILE);
 #else
 	std::string s = getenv("HOME");
 	djAppendPathS(s, CONFIG_FILE);
