@@ -21,7 +21,11 @@ bool g_bMustRedraw = true;
 int HeartBeat();
 
 //#define CONFIG_FILE ".syasokoban1.00"
-#define CONFIG_FILE ".djgames"
+#ifdef __HAIKU__
+	#define CONFIG_FILE "syasokoban_settings"
+#else
+	#define CONFIG_FILE ".djgames"
+#endif
 
 int main(int, char**)
 {
